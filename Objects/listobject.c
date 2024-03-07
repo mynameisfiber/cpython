@@ -8,6 +8,7 @@
 #include "pycore_object.h"        // _PyObject_GC_TRACK()
 #include "pycore_tuple.h"         // _PyTuple_FromArray()
 #include <stddef.h>
+#include <stdio.h>
 
 /*[clinic input]
 class list "PyListObject *" "&PyList_Type"
@@ -79,6 +80,8 @@ list_resize(PyListObject *self, Py_ssize_t newsize)
         new_allocated = 0;
     if (new_allocated <= (size_t)PY_SSIZE_T_MAX / sizeof(PyObject *)) {
         num_allocated_bytes = new_allocated * sizeof(PyObject *);
+
+        printf("Reallocating bins for list: %ld len, %ld newsize, %ld new_alloc, change = %ld\n", Py_SIZE(self), newsize, new_allocated, new_allocated - allocated);
         items = (PyObject **)PyMem_Realloc(self->ob_item, num_allocated_bytes);
     }
     else {
