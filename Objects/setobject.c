@@ -626,6 +626,13 @@ set_merge(PySetObject *so, PyObject *otherset)
 }
 
 static PyObject *
+set_get_allocated(PySetObject *so, PyObject *Py_UNUSED(ignored))
+{
+    return PyLong_FromSsize_t(so->mask + 1);
+}
+PyDoc_STRVAR(allocated_doc, "Returns number of allocated elements.");
+
+static PyObject *
 set_pop(PySetObject *so, PyObject *Py_UNUSED(ignored))
 {
     /* Make sure the search finger is in bounds */
@@ -2059,6 +2066,8 @@ static PyMethodDef set_methods[] = {
      issuperset_doc},
     {"pop",             (PyCFunction)set_pop,           METH_NOARGS,
      pop_doc},
+    {"allocated",             (PyCFunction)set_get_allocated,           METH_NOARGS,
+     allocated_doc},
     {"__reduce__",      (PyCFunction)set_reduce,        METH_NOARGS,
      reduce_doc},
     {"remove",          (PyCFunction)set_remove,        METH_O,

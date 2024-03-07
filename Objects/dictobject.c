@@ -2640,6 +2640,23 @@ dict_items(PyDictObject *mp)
 }
 
 /*[clinic input]
+dict.allocated
+
+Returns number of allocated items 
+[clinic start generated code]*/
+
+static PyObject *
+dict_allocated_impl(PyDictObject *self)
+/*[clinic end generated code: output=4d7da600e6fb5fa7 input=3e45a8ecb1dd547e]*/
+{
+    if (!PyDict_Check(self)) {
+        return NULL;
+    }
+    PyDictObject *mp = (PyDictObject *)self;
+    return PyLong_FromSsize_t(DK_SIZE(mp->ma_keys));
+}
+
+/*[clinic input]
 @classmethod
 dict.fromkeys
     iterable: object
@@ -3666,6 +3683,7 @@ static PyMethodDef mapp_methods[] = {
     DICT_SETDEFAULT_METHODDEF
     DICT_POP_METHODDEF
     DICT_POPITEM_METHODDEF
+    DICT_ALLOCATED_METHODDEF    
     {"keys",            dictkeys_new,                   METH_NOARGS,
     keys__doc__},
     {"items",           dictitems_new,                  METH_NOARGS,

@@ -290,6 +290,24 @@ exit:
     return return_value;
 }
 
+PyDoc_STRVAR(list_allocated__doc__,
+"allocated($self, /)\n"
+"--\n"
+"\n"
+"Returns number of allocated items");
+
+#define LIST_ALLOCATED_METHODDEF    \
+    {"allocated", (PyCFunction)list_allocated, METH_NOARGS, list_allocated__doc__},
+
+static PyObject *
+list_allocated_impl(PyListObject *self);
+
+static PyObject *
+list_allocated(PyListObject *self, PyObject *Py_UNUSED(ignored))
+{
+    return list_allocated_impl(self);
+}
+
 PyDoc_STRVAR(list_count__doc__,
 "count($self, value, /)\n"
 "--\n"
@@ -383,4 +401,4 @@ list___reversed__(PyListObject *self, PyObject *Py_UNUSED(ignored))
 {
     return list___reversed___impl(self);
 }
-/*[clinic end generated code: output=2ca109d8acc775bc input=a9049054013a1b77]*/
+/*[clinic end generated code: output=a68080a252567b49 input=a9049054013a1b77]*/

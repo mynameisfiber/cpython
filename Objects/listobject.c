@@ -80,8 +80,6 @@ list_resize(PyListObject *self, Py_ssize_t newsize)
         new_allocated = 0;
     if (new_allocated <= (size_t)PY_SSIZE_T_MAX / sizeof(PyObject *)) {
         num_allocated_bytes = new_allocated * sizeof(PyObject *);
-
-        printf("Reallocating bins for list: %ld len, %ld newsize, %ld new_alloc, change = %ld\n", Py_SIZE(self), newsize, new_allocated, new_allocated - allocated);
         items = (PyObject **)PyMem_Realloc(self->ob_item, num_allocated_bytes);
     }
     else {
@@ -2632,6 +2630,20 @@ list_index_impl(PyListObject *self, PyObject *value, Py_ssize_t start,
 }
 
 /*[clinic input]
+list.allocated
+
+Returns number of allocated items
+[clinic start generated code]*/
+
+static PyObject *
+list_allocated_impl(PyListObject *self)
+/*[clinic end generated code: output=c6f18a59e2519d47 input=ebf27deb08b570b3]*/
+{
+    PyObject *return_value = PyLong_FromSsize_t(self->allocated);
+    return return_value;
+}
+
+/*[clinic input]
 list.count
 
      value: object
@@ -2857,6 +2869,7 @@ static PyMethodDef list_methods[] = {
     LIST_POP_METHODDEF
     LIST_REMOVE_METHODDEF
     LIST_INDEX_METHODDEF
+    LIST_ALLOCATED_METHODDEF
     LIST_COUNT_METHODDEF
     LIST_REVERSE_METHODDEF
     LIST_SORT_METHODDEF

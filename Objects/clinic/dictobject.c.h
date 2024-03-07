@@ -8,6 +8,24 @@ preserve
 #endif
 
 
+PyDoc_STRVAR(dict_allocated__doc__,
+"allocated($self, /)\n"
+"--\n"
+"\n"
+"Returns number of allocated items");
+
+#define DICT_ALLOCATED_METHODDEF    \
+    {"allocated", (PyCFunction)dict_allocated, METH_NOARGS, dict_allocated__doc__},
+
+static PyObject *
+dict_allocated_impl(PyDictObject *self);
+
+static PyObject *
+dict_allocated(PyDictObject *self, PyObject *Py_UNUSED(ignored))
+{
+    return dict_allocated_impl(self);
+}
+
 PyDoc_STRVAR(dict_fromkeys__doc__,
 "fromkeys($type, iterable, value=None, /)\n"
 "--\n"
@@ -197,4 +215,4 @@ dict___reversed__(PyDictObject *self, PyObject *Py_UNUSED(ignored))
 {
     return dict___reversed___impl(self);
 }
-/*[clinic end generated code: output=c0064abbea6091c5 input=a9049054013a1b77]*/
+/*[clinic end generated code: output=e40c56cc5b460666 input=a9049054013a1b77]*/
